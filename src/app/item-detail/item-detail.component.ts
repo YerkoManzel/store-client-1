@@ -21,6 +21,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   next: number;
   public imagePath: string;
   public utilidad: number;
+  public showImage: boolean;
 
   private image: File;
 
@@ -31,6 +32,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
               private sendBooleanService: SendBooleanService,
               private location: Location) {
     this.imagePath = '';
+    this.showImage = false;
   }
 
   ngOnInit() {
@@ -46,6 +48,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
             this.sendItemService.sendItem(item);
 
             this.loadExpenseItem(item.id);
+
+            this.showImage = !!item.image;
           }
         });
     });
@@ -74,6 +78,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
       reader.onload = (progressEvent: ProgressEvent) => {
         this.imagePath = (progressEvent.target as FileReader).result.toString();
+        this.item.image = this.imagePath.substr(23, this.imagePath.length + 1);
       };
       reader.readAsDataURL(event.target.files[0]);
 
@@ -83,6 +88,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       this.itemService.uploadImage(this.item.id, uploadData)
         .subscribe((value: any) => {
         });
+
+      this.showImage = true;
     }
   }
 
