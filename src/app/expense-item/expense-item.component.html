@@ -1,0 +1,35 @@
+<article class="card-edit-item">
+  <mat-card>
+    <mat-card-header class="card-edit-item-header">
+      <mat-card-title>Edit Expense {{nameItem}}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="card-edit-item-content">
+      <!--<form [formGroup]="formEditItem" class="card-edit-item-content-form">-->
+        <!--<mat-form-field>-->
+          <!--<input matInput placeholder="Price"-->
+                 <!--type="number"-->
+                 <!--formControlName="price">-->
+        <!--</mat-form-field>-->
+
+        <!--<mat-form-field>-->
+          <!--<input matInput placeholder="Identifier"-->
+                 <!--type="text"-->
+                 <!--formControlName="identifier">-->
+        <!--</mat-form-field>-->
+
+        <!--<mat-form-field>-->
+          <!--<input matInput placeholder="Version"-->
+                 <!--type="number"-->
+                 <!--formControlName="version">-->
+        <!--</mat-form-field>-->
+
+      <!--</form>-->
+    </mat-card-content>
+
+    <mat-card-actions class="card-edit-item-button">
+      <button mat-button (click)="editItem()">Edit</button>
+      <button mat-button [routerLink]="'/itemdetail/'+ itemId">Cancelar</button>
+    </mat-card-actions>
+  </mat-card>
+</article>

@@ -16,10 +16,10 @@ export class UpdateItemComponent implements OnInit, OnDestroy {
 
 
   public item: Item;
-  public itemEdit: any;
-  public nameItem: string;
-  public itemIds: number[];
   public itemId: number;
+  public nameItem: string;
+  public itemEdit: any;
+  public itemIds: number[];
   public formEditItem: FormGroup;
 
   private sendItemSubscription: Subscription;
