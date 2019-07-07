@@ -17,6 +17,8 @@
         <mat-card-content>
           <p>{{item.description}}
           </p>
+
+          <h1>Utilidad: {{utilidad}}</h1>
         </mat-card-content>
         <mat-card-actions align="start">
           <button mat-button [routerLink]="['/itemdetail', prev]"><span class="fa fa-chevron-left fa-lg"></span>
@@ -27,6 +29,12 @@
           <span class="flex-spacer"></span>
           <button mat-button [routerLink]="['/itemdetail/', next]"><span class="fa fa-chevron-right fa-lg"></span>
           </button>
+          <input class="cc-ui-d-none"
+                 type="file"
+                 #fileInput
+                 (change)="uploadImage($event)">
+          <button mat-button (click)="fileInput.click()">Add image</button>
+          <button mat-button (click)="deleteImage()">Delete image</button>
         </mat-card-actions>
       </mat-card>
     </div>

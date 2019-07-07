@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Item} from '../shared/item';
 import {ItemService} from '../services/item.service';
 import {ActivatedRoute, Params} from '@angular/router';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Expense} from '../shared/Expense';
 
 @Component({
   selector: 'app-expense-item',
@@ -11,30 +13,62 @@ import {ActivatedRoute, Params} from '@angular/router';
 export class ExpenseItemComponent implements OnInit {
 
   public itemIds: number[];
-  public item: Item;
+  public item: Expense;
   public itemId: number;
   public nameItem: string;
+  public formExpense: FormGroup;
+
+  private itemExpenseEdit: any;
 
   constructor(private itemService: ItemService,
-              private activeRouter: ActivatedRoute) {
+              private activeRouter: ActivatedRoute,
+              private fb: FormBuilder) {
   }
 
   ngOnInit() {
+    this.initForm();
     this.itemListener();
+  }
+
+  public editExpense(): void {
+    if (this.formExpense.valid) {
+      this.itemService.updateExpense(this.item.id, this.formExpense.value)
+        .subscribe((expense: Expense) => {
+        });
+    }
   }
 
   public itemListener(): void {
     this.itemService.getItemIds().subscribe(items => {
       this.itemIds = items;
       this.activeRouter.params
-        .switchMap((params: Params) => this.itemService.getItem(+params.id))
-        .subscribe(item => {
-          if (item) {
-            this.item = item;
-            this.itemId = item.id;
-            this.nameItem = item.name;
+        .switchMap((params: Params) => this.itemService.getItemExpense(+params.id))
+        .subscribe(expense => {
+          if (expense) {
+            this.item = expense;
+            this.itemId = expense.id;
+            this.nameItem = expense.itemInstance.item.name;
+            this.formFilling(expense);
           }
         });
     });
+  }
+
+  private initForm(): void {
+    this.formExpense = this.fb.group({
+      expenseType: [null],
+      description: [null],
+      value: [null]
+    });
+  }
+
+  private formFilling(expense: Expense): void {
+    this.itemExpenseEdit = {
+      expenseType: expense.expenseType,
+      description: expense.description,
+      value: expense.value
+    };
+
+    this.formExpense.patchValue(this.itemExpenseEdit);
   }
 }
