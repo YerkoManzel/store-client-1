@@ -5,30 +5,30 @@
     </mat-card-header>
 
     <mat-card-content class="card-edit-item-content">
-      <!--<form [formGroup]="formEditItem" class="card-edit-item-content-form">-->
-        <!--<mat-form-field>-->
-          <!--<input matInput placeholder="Price"-->
-                 <!--type="number"-->
-                 <!--formControlName="price">-->
-        <!--</mat-form-field>-->
+      <form [formGroup]="formFeature" class="card-edit-item-content-form">
+        <mat-form-field>
+          <input matInput placeholder="Name"
+                 type="text"
+                 formControlName="name">
+        </mat-form-field>
 
-        <!--<mat-form-field>-->
-          <!--<input matInput placeholder="Identifier"-->
-                 <!--type="text"-->
-                 <!--formControlName="identifier">-->
-        <!--</mat-form-field>-->
+        <mat-form-field>
+          <input matInput placeholder="Value"
+                 type="text"
+                 formControlName="value">
+        </mat-form-field>
 
-        <!--<mat-form-field>-->
-          <!--<input matInput placeholder="Version"-->
-                 <!--type="number"-->
-                 <!--formControlName="version">-->
-        <!--</mat-form-field>-->
+        <mat-form-field>
+          <input matInput placeholder="Version"
+                 type="number"
+                 formControlName="version">
+        </mat-form-field>
 
-      <!--</form>-->
+      </form>
     </mat-card-content>
 
     <mat-card-actions class="card-edit-item-button">
-      <button mat-button (click)="editItem()">Edit</button>
+      <button mat-button (click)="editFeature()">Edit</button>
       <button mat-button [routerLink]="'/itemdetail/'+ itemId">Cancelar</button>
     </mat-card-actions>
   </mat-card>
