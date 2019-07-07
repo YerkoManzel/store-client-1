@@ -47,9 +47,17 @@ body {
   flex: 1 1 auto;
 }
 
+.tab-item {
+  .mat-tab-list {
+    display: flex;
+    justify-content: center;
+  }
+}
+
 .card-edit-item {
   display: flex;
   justify-content: center;
+  padding: 50px;
 
   &-header {
   }
