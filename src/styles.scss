@@ -46,3 +46,26 @@ body {
 .flex-spacer {
   flex: 1 1 auto;
 }
+
+.card-edit-item {
+  display: flex;
+  justify-content: center;
+
+  &-header {
+  }
+
+  &-content {
+    display: flex;
+    justify-content: center;
+    width: 600px;
+
+    &-form {
+      display: grid;
+    }
+  }
+
+  &-button {
+    display: flex;
+    justify-content: center;
+  }
+}
