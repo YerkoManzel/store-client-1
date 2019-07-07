@@ -13,7 +13,8 @@
             <h3>{{item.name | uppercase}}</h3>
           </mat-card-title>
         </mat-card-title-group>
-        <img matCardImage data-src="data:image/png;base64,{{item.image}}" alt={{item.name}}>
+        <a *ngIf="!showImage" type="button" (click)="fileInput.click()" style="cursor: pointer"><h1>Add image</h1></a>
+        <img *ngIf="showImage" matCardImage data-src="data:image/png;base64,{{item.image}}" alt={{item.name}}>
         <mat-card-content>
           <p>{{item.description}}
           </p>
