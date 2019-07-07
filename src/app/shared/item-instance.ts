@@ -1,4 +1,3 @@
-import {Comment} from './comment';
 import {Item} from './item';
 
 export class ItemInstance {
@@ -6,5 +5,6 @@ export class ItemInstance {
   identifier: string;
   version: number;
   price: number;
+  utilidad: number;
   item: Item;
 }
