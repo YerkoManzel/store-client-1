@@ -33,4 +33,8 @@ export class ItemService {
     return this.http.get(baseURL + 'iteminstances').pipe(map(items => (items as Item[]).map(item => item.id))) as Observable<number[]>;
   }
 
+  updateItem(id: number, itemEdit: any): Observable<Item> {
+    return this.http.put(baseURL + 'iteminstances/updateiteminstance/' + id, itemEdit) as Observable<Item>;
+  }
+
 }

@@ -19,6 +19,7 @@ export class UpdateItemComponent implements OnInit, OnDestroy {
   public itemEdit: any;
   public nameItem: string;
   public itemIds: number[];
+  public itemId: number;
   public formEditItem: FormGroup;
 
   private sendItemSubscription: Subscription;
@@ -40,6 +41,14 @@ export class UpdateItemComponent implements OnInit, OnDestroy {
     this.sendItemSubscription.unsubscribe();
   }
 
+  public editItem(): void {
+    if (this.formEditItem.valid) {
+      this.itemService.updateItem(this.item.id, this.formEditItem.value)
+        .subscribe((item: Item) => {
+        });
+    }
+  }
+
   public itemListener(): void {
     this.itemService.getItemIds().subscribe(items => {
       this.itemIds = items;
@@ -48,6 +57,7 @@ export class UpdateItemComponent implements OnInit, OnDestroy {
         .subscribe(item => {
           if (item) {
             this.item = item;
+            this.itemId = item.id;
             this.nameItem = item.name;
             this.formFilling(item);
           }
@@ -57,17 +67,17 @@ export class UpdateItemComponent implements OnInit, OnDestroy {
 
   private initForm(): void {
     this.formEditItem = this.fb.group({
-      name: [null],
-      description: [null],
-      price: [null]
+      price: [null],
+      identifier: [null],
+      version: [null]
     });
   }
 
   private formFilling(item: Item): void {
     this.itemEdit = {
-      name: item.name,
-      description: item.description,
-      price: item.price
+      price: item.price,
+      identifier: item.identifier,
+      version: item.version
     };
 
     this.formEditItem.patchValue(this.itemEdit);

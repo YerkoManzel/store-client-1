@@ -34,7 +34,6 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       this.route.params
         .switchMap((params: Params) => this.itemService.getItem(+params.id))
         .subscribe(item => {
-          console.log(item);
           this.item = item;
           this.setPrevNext(item.id);
           this.sendBooleanService.sendBoolean(true);

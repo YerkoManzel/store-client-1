@@ -15,7 +15,6 @@ export class SendItemService {
   }
 
   public sendItem(item: Item): void {
-    console.log(item);
     this.data.next(item);
   }
 

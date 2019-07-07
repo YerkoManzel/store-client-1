@@ -34,7 +34,6 @@ export class ContactComponent implements OnInit {
 
   onSubmit() {
     this.message = this.messageForm.value;
-    console.log(this.message);
     this.messageForm.reset({
       firstname: '',
       lastname: '',
