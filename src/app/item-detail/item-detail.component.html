@@ -27,6 +27,12 @@
           <span class="flex-spacer"></span>
           <button mat-button [routerLink]="['/itemdetail/', next]"><span class="fa fa-chevron-right fa-lg"></span>
           </button>
+          <input class="cc-ui-d-none"
+                 type="file"
+                 #fileInput
+                 (change)="uploadImage($event)">
+          <button mat-button (click)="fileInput.click()">Add image</button>
+          <button mat-button (click)="deleteImage()">Delete image</button>
         </mat-card-actions>
       </mat-card>
     </div>

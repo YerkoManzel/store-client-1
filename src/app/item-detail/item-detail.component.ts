@@ -6,7 +6,6 @@ import {Location} from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 import {SendBooleanService} from '../services/send-boolean.service';
 import {SendItemService} from '../services/send-item.service';
-import {logging} from 'selenium-webdriver';
 
 @Component({
   selector: 'app-item-detail',
@@ -19,6 +18,9 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   itemIds: number[];
   prev: number;
   next: number;
+  public imagePath: string;
+
+  private image: File;
 
   constructor(private itemService: ItemService,
               private route: ActivatedRoute,
@@ -26,6 +28,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
               private router: Router,
               private sendBooleanService: SendBooleanService,
               private location: Location) {
+    this.imagePath = '';
   }
 
   ngOnInit() {
@@ -44,6 +47,30 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sendBooleanService.sendBoolean(false);
+  }
+
+  public uploadImage(event: any): void {
+    const file: File = event.target.files[0];
+
+    if (event.target.files && file) {
+      const reader = new FileReader();
+      this.image = file;
+
+      reader.onload = (progressEvent: ProgressEvent) => {
+        this.imagePath = (progressEvent.target as FileReader).result.toString();
+      };
+      reader.readAsDataURL(event.target.files[0]);
+
+      const uploadData: FormData = new FormData();
+      uploadData.append('file', this.image);
+
+      this.itemService.uploadImage(this.item.id, uploadData)
+        .subscribe((value: any) => {
+        });
+    }
+  }
+
+  public deleteImage(): void {
   }
 
   goBack(): void {

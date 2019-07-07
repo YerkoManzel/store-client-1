@@ -37,4 +37,8 @@ export class ItemService {
     return this.http.put(baseURL + 'iteminstances/updateiteminstance/' + id, itemEdit) as Observable<Item>;
   }
 
+  uploadImage(id: number, file: FormData): Observable<any> {
+    return this.http.post(baseURL + 'items/' + id + '/image', file) as Observable<any>;
+  }
+
 }
