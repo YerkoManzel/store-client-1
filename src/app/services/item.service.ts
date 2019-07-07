@@ -6,6 +6,7 @@ import 'rxjs-compat/add/operator/delay';
 import {HttpClient} from '@angular/common/http';
 import {baseURL} from '../shared/baseurl';
 import {map} from 'rxjs/operators';
+import {Expense} from '../shared/Expense';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class ItemService {
     return this.http.get(baseURL + 'iteminstances/' + id) as Observable<Item>;
   }
 
+  getItemExpense(id: number): Observable<Expense> {
+    return this.http.get(baseURL + 'expense/' + id) as Observable<Expense>;
+  }
+
   getFeaturedItem(): Observable<Item> {
     return this.http.get(baseURL + 'iteminstances?featured=true').pipe(
       map(items => (items as Item[]).find(item => item.featured === true))) as Observable<Item>;
@@ -39,6 +44,10 @@ export class ItemService {
 
   uploadImage(id: number, file: FormData): Observable<any> {
     return this.http.post(baseURL + 'items/' + id + '/image', file) as Observable<any>;
+  }
+
+  updateExpense(id: number, expenseEdit: any): Observable<Expense> {
+    return this.http.put(baseURL + 'expense/update/' + id, expenseEdit) as Observable<Expense>;
   }
 
 }
