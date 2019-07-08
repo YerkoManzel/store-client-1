@@ -46,7 +46,6 @@ export class FeatureItemComponent implements OnInit {
         .switchMap((params: Params) => this.itemService.getItemFeature(+params.id))
         .subscribe(feature => {
           if (feature) {
-            console.log(feature);
             this.item = feature.item;
             this.itemId = feature.item.id;
             this.nameItem = feature.item.name;

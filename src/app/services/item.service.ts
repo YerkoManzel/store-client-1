@@ -8,6 +8,7 @@ import {baseURL} from '../shared/baseurl';
 import {map} from 'rxjs/operators';
 import {Expense} from '../shared/Expense';
 import {FeatureInstance} from '../shared/feature-instance';
+import {ItemInstance} from '../shared/item-instance';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,17 @@ export class ItemService {
     return this.http.get(baseURL + 'iteminstances') as Observable<Item[]>;
   }
 
+  getItemInstances(): Observable<any[]> {
+    // return Observable.of(ITEMS).delay(2000);
+    return this.http.get(baseURL + 'iteminstances') as Observable<any[]>;
+  }
+
   getItem(id: number): Observable<Item> {
     return this.http.get(baseURL + 'iteminstances/' + id) as Observable<Item>;
+  }
+
+  getItemInstance(id: number): Observable<ItemInstance> {
+    return this.http.get(baseURL + 'iteminstances/model/' + id) as Observable<ItemInstance>;
   }
 
   getItemExpense(id: number): Observable<Expense> {
@@ -61,6 +71,10 @@ export class ItemService {
 
   updateFeature(id: number, featureEdit: any): Observable<FeatureInstance> {
     return this.http.put(baseURL + 'feature/update/' + id, featureEdit) as Observable<FeatureInstance>;
+  }
+
+  buyItem(id: number, cantidad: any): Observable<ItemInstance> {
+    return this.http.put(baseURL + 'iteminstances/updateiteminstance/' + id, cantidad) as Observable<ItemInstance>;
   }
 
 }
