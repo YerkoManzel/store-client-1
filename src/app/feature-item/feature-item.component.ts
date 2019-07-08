@@ -43,12 +43,15 @@ export class FeatureItemComponent implements OnInit {
     this.itemService.getItemIds().subscribe(items => {
       this.itemIds = items;
       this.activeRouter.params
-        .switchMap((params: Params) => this.itemService.getItem(+params.id))
-        .subscribe(item => {
-          if (item) {
-            this.item = item;
-            this.itemId = item.id;
-            this.nameItem = item.name;
+        .switchMap((params: Params) => this.itemService.getItemFeature(+params.id))
+        .subscribe(feature => {
+          if (feature) {
+            console.log(feature);
+            this.item = feature.item;
+            this.itemId = feature.item.id;
+            this.nameItem = feature.item.name;
+
+            this.formFilling(feature);
           }
         });
     });
@@ -62,11 +65,11 @@ export class FeatureItemComponent implements OnInit {
     });
   }
 
-  private formFilling(expense: Expense): void {
+  private formFilling(featureInstance: FeatureInstance): void {
     this.itemFeatureEdit = {
-      name: expense.expenseType,
-      value: expense.description,
-      version: expense.value
+      name: featureInstance.feature.name,
+      value: featureInstance.value,
+      version: featureInstance.version
     };
 
     this.formFeature.patchValue(this.itemFeatureEdit);

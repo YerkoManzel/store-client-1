@@ -64,7 +64,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     this.itemService.getItemExpense(id)
       .subscribe((expense: Expense) => {
         if (expense) {
-          this.utilidad = expense.itemInstance.price - expense.value;
+          this.utilidad = expense.itemInstance.utilidad;
         }
       });
   }
@@ -94,6 +94,11 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   }
 
   public deleteImage(): void {
+    this.itemService.deleteImage(this.item.id)
+      .subscribe((image) => {
+      });
+    this.item.image = null;
+    this.showImage = false;
   }
 
   goBack(): void {

@@ -30,8 +30,8 @@ export class ItemService {
     return this.http.get(baseURL + 'expense/' + id) as Observable<Expense>;
   }
 
-  getItemFeature(id: number): Observable<Expense> {
-    return this.http.get(baseURL + 'feature/' + id) as Observable<Expense>;
+  getItemFeature(id: number): Observable<FeatureInstance> {
+    return this.http.get(baseURL + 'feature/getFeature/' + id) as Observable<FeatureInstance>;
   }
 
   getFeaturedItem(): Observable<Item> {
@@ -49,6 +49,10 @@ export class ItemService {
 
   uploadImage(id: number, file: FormData): Observable<any> {
     return this.http.post(baseURL + 'items/' + id + '/image', file) as Observable<any>;
+  }
+
+  deleteImage(id: number): Observable<any> {
+    return this.http.delete(baseURL + 'items/' + id + '/deleteImage') as Observable<any>;
   }
 
   updateExpense(id: number, expenseEdit: any): Observable<Expense> {
