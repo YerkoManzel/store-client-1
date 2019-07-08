@@ -19,7 +19,8 @@
           <p>{{item.description}}
           </p>
 
-          <h1>Utilidad: {{utilidad}}</h1>
+          <h1>Utilidad:{{utilidad}}</h1>
+          <h1>Cantidad disponible: {{cantidad}}</h1>
         </mat-card-content>
         <mat-card-actions align="start">
           <button mat-button [routerLink]="['/itemdetail', prev]"><span class="fa fa-chevron-left fa-lg"></span>
@@ -36,6 +37,7 @@
                  (change)="uploadImage($event)">
           <button mat-button (click)="fileInput.click()">Add image</button>
           <button mat-button (click)="deleteImage()">Delete image</button>
+          <button mat-button (click)="buyItem()" [disabled]="activeButton">Buy Item</button>
         </mat-card-actions>
       </mat-card>
     </div>

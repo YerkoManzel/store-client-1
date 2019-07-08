@@ -51,6 +51,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {UpdateItemComponent} from './update-item/update-item.component';
 import { ExpenseItemComponent } from './expense-item/expense-item.component';
 import { FeatureItemComponent } from './feature-item/feature-item.component';
+import {InventoryItemComponent} from './inventory-item/inventory-item.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { FeatureItemComponent } from './feature-item/feature-item.component';
     LoginComponent,
     UpdateItemComponent,
     ExpenseItemComponent,
-    FeatureItemComponent
+    FeatureItemComponent,
+    InventoryItemComponent,
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule,

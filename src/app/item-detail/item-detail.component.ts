@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Item} from '../shared/item';
 import {ItemService} from '../services/item.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
@@ -7,6 +7,9 @@ import 'rxjs/add/operator/switchMap';
 import {SendBooleanService} from '../services/send-boolean.service';
 import {SendItemService} from '../services/send-item.service';
 import {Expense} from '../shared/Expense';
+import {ItemInstance} from '../shared/item-instance';
+import {MatDialog} from '@angular/material';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-item-detail',
@@ -20,10 +23,14 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   prev: number;
   next: number;
   public imagePath: string;
+  public cantidad: string;
   public utilidad: number;
   public showImage: boolean;
+  public activeButton: boolean;
+  public itemInstance: ItemInstance;
 
   private image: File;
+  private itemSubscription: Subscription;
 
   constructor(private itemService: ItemService,
               private route: ActivatedRoute,
@@ -31,8 +38,11 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
               private router: Router,
               private sendBooleanService: SendBooleanService,
               private location: Location) {
+    this.itemSubscription = new Subscription();
     this.imagePath = '';
     this.showImage = false;
+    this.cantidad = '';
+    this.activeButton = false;
   }
 
   ngOnInit() {
@@ -48,6 +58,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
             this.sendItemService.sendItem(item);
 
             this.loadExpenseItem(item.id);
+            this.loadCantidadItem(item.id);
 
             this.showImage = !!item.image;
           }
@@ -58,6 +69,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sendBooleanService.sendBoolean(false);
+    this.itemSubscription.unsubscribe();
   }
 
   private loadExpenseItem(id: number): void {
@@ -66,6 +78,30 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         if (expense) {
           this.utilidad = expense.itemInstance.utilidad;
         }
+      });
+  }
+
+  private loadCantidadItem(id: number): void {
+    this.itemService.getItemInstance(id)
+      .subscribe((itemInstance: ItemInstance) => {
+        if (itemInstance.cantidad) {
+          this.itemInstance = itemInstance;
+          this.activeButton = false;
+          this.cantidad = '' + itemInstance.cantidad;
+        } else {
+          this.activeButton = true;
+          this.cantidad = 'AGOTADO!!!!';
+        }
+      });
+  }
+
+  public buyItem(): void {
+    const cantidad = {
+      cantidad: this.itemInstance.cantidad - 1
+    };
+    this.itemSubscription = this.itemService.buyItem(this.item.id, cantidad)
+      .subscribe((itemInstance: ItemInstance) => {
+        this.cantidad = '' + itemInstance.cantidad;
       });
   }
 

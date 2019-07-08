@@ -6,5 +6,6 @@ export class ItemInstance {
   version: number;
   price: number;
   utilidad: number;
+  cantidad: number;
   item: Item;
 }

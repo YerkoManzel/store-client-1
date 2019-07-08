@@ -6,6 +6,7 @@ import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
 import {ItemService} from '../services/item.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {SendBooleanService} from '../services/send-boolean.service';
+import {ItemInstance} from '../shared/item-instance';
 
 @Component({
   selector: 'app-update-item',
@@ -15,7 +16,7 @@ import {SendBooleanService} from '../services/send-boolean.service';
 export class UpdateItemComponent implements OnInit, OnDestroy {
 
 
-  public item: Item;
+  public item: ItemInstance;
   public itemId: number;
   public nameItem: string;
   public itemEdit: any;
@@ -53,13 +54,13 @@ export class UpdateItemComponent implements OnInit, OnDestroy {
     this.itemService.getItemIds().subscribe(items => {
       this.itemIds = items;
       this.activeRouter.params
-        .switchMap((params: Params) => this.itemService.getItem(+params.id))
-        .subscribe(item => {
-          if (item) {
-            this.item = item;
-            this.itemId = item.id;
-            this.nameItem = item.name;
-            this.formFilling(item);
+        .switchMap((params: Params) => this.itemService.getItemInstance(+params.id))
+        .subscribe(itemInstance => {
+          if (itemInstance) {
+            this.item = itemInstance;
+            this.itemId = itemInstance.item.id;
+            this.nameItem = itemInstance.item.name;
+            this.formFilling(itemInstance);
           }
         });
     });
@@ -68,14 +69,16 @@ export class UpdateItemComponent implements OnInit, OnDestroy {
   private initForm(): void {
     this.formEditItem = this.fb.group({
       price: [null],
+      cantidad: [null],
       identifier: [null],
       version: [null]
     });
   }
 
-  private formFilling(item: Item): void {
+  private formFilling(item: ItemInstance): void {
     this.itemEdit = {
       price: item.price,
+      cantidad: item.cantidad,
       identifier: item.identifier,
       version: item.version
     };
